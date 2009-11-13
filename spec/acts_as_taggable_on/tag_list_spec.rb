@@ -49,4 +49,34 @@ describe TagList do
     @tag_list.add("cool","rad,bodacious")
     @tag_list.to_s.should == "awesome, radical, cool, \"rad,bodacious\""
   end
+  
+  describe "auto delimiting based on whether there are commas supplied" do
+    it "should assign tags basing on commas" do
+      list = TagList.from("house, banana")
+      list.should == %w(house banana)
+    end
+
+    it "should assign tags basing on spaces if commas are absent" do
+      list = TagList.from("house banana")
+      list.should ==  %w(house banana)
+    end
+
+    it "should assign tags if there are spaces and quotes" do
+      list = TagList.from("'white banana' banana")
+      list.should == ["white banana", "banana"]
+    end
+    
+    it "should handle commas and quotes" do
+      list = TagList.from("'white banana', banana")
+      list.should == ["white banana", "banana"]
+    end
+    
+    it "should handle commas in quotes" do
+      list = TagList.from("'white, banana', banana")
+      list.should == ["white, banana", "banana"]    
+        
+      list = TagList.from('"white, banana", banana')
+      list.should == ["white, banana", "banana"]      
+    end
+  end
 end

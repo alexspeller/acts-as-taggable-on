@@ -74,15 +74,17 @@ class TagList < Array
     #   tag_list # ["One", "Two", "Three"]
     def from(string)
       string = string.join(", ") if string.respond_to?(:join)
+      
+      current_delimiter = delimiter
 
       returning new do |tag_list|
         string = string.to_s.dup
         
         # Parse the quoted tags
-        string.gsub!(/"(.*?)"\s*#{delimiter}?\s*/) { tag_list << $1; "" }
-        string.gsub!(/'(.*?)'\s*#{delimiter}?\s*/) { tag_list << $1; "" }
-        
-        tag_list.add(string.split(delimiter))
+        string.gsub!(/"(.*?)"\s*#{current_delimiter}?\s*/) { tag_list << $1; "" }
+        string.gsub!(/'(.*?)'\s*#{current_delimiter}?\s*/) { tag_list << $1; "" }
+        current_delimiter = " " unless string.include?(current_delimiter)
+        tag_list.add(string.split(current_delimiter))
       end
     end
     
