@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
      "README",
      "Rakefile",
      "VERSION",
+     "generators/acts_as_taggable_on_migration/acts_as_taggable_on_migration_generator.rb",
+     "generators/acts_as_taggable_on_migration/templates/migration.rb",
      "lib/acts-as-taggable-on.rb",
      "lib/acts_as_taggable_on/acts_as_taggable_on.rb",
      "lib/acts_as_taggable_on/acts_as_tagger.rb",
