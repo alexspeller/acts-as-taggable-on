@@ -55,20 +55,28 @@ describe TagList do
       list = TagList.from("house, banana")
       list.should == %w(house banana)
     end
+    
+    it "should split on commas over spaces" do
+      list = TagList.from("house, banana tree")
+      list.should == ['house', 'banana tree']
+    end
 
     it "should assign tags basing on spaces if commas are absent" do
-      list = TagList.from("house banana")
-      list.should ==  %w(house banana)
+      list = TagList.from("house banana orange")
+      list.should ==  %w(house banana orange)
     end
 
     it "should assign tags if there are spaces and quotes" do
-      list = TagList.from("'white banana' banana")
-      list.should == ["white banana", "banana"]
+      list = TagList.from("'white banana' banana lemon")
+      list.should == ["white banana", "banana", "lemon"]
     end
     
     it "should handle commas and quotes" do
-      list = TagList.from("'white banana', banana")
-      list.should == ["white banana", "banana"]
+      list = TagList.from("'white banana', banana fish")
+      list.should == ["white banana", "banana", "fish"]
+      
+      list = TagList.from("'white banana', banana, fish")
+      list.should == ["white banana", "banana", "fish"]
     end
     
     it "should handle commas in quotes" do
